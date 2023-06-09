@@ -159,3 +159,11 @@ class CodeArea(tk.Frame):
         line_numbers_scroll = (input_text_scroll[0], input_text_scroll[1])
         self.line_numbers.yview_moveto(str(line_numbers_scroll[0]))
         self.scrollbar.set(*self.input_text.yview())
+    
+    def save_current_buffer(self):
+        from file import save_buffer_to_file
+
+        if self.current_buffer is None:
+            return
+
+        save_buffer_to_file(self.current_buffer)

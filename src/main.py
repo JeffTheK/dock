@@ -35,6 +35,8 @@ menu_bar.add_cascade(label="File", menu=file_menu)
 file_menu.add_command(label="Open File", command=lambda c=code_area: ask_open_file(c))
 file_menu.add_command(label="Open Folder", command=lambda f=file_tree: open_directory(f))
 
+file_menu.add_command(label="Save File", command=lambda c=code_area: c.save_current_buffer())
+
 # Create the "Settings" menu
 settings_menu = tk.Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="Settings", menu=settings_menu)
