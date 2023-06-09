@@ -6,6 +6,7 @@ from file_tree import FileTree
 from file import ask_open_file, open_directory, open_file
 from vim import setup_vim
 from utils import load_config, CONFIG_PATH
+from syntax import setup_syntax
 
 config = load_config()
 
@@ -22,6 +23,7 @@ file_tree = FileTree(root, code_area)
 config.config_file_tree(file_tree)
 
 setup_vim(code_area, status_bar)
+setup_syntax(code_area)
 
 # Create the menu bar
 menu_bar = tk.Menu(root)

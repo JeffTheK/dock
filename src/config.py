@@ -25,6 +25,23 @@ class STATUS_BAR:
 class FILE_TREE:
     KWARGS = {"row": 0, "column": 0, "sticky": "nsew"}
 
+class SYNTAX:
+    SUPPORTED_LANGUAGES = ["python"]
+    FILE_EXTENSIONS = {"python": [".py"]}
+    KEYWORDS = {
+        "python": {
+            "def": "blue",
+            "while": "blue",
+            "return": "blue",
+            "class": "blue",
+            "if": "purple",
+            "else": "purple",
+            "or": "purple",
+            "not": "purple"
+        }
+    }
+    SEPARATORS = {"python": " \n:,."}
+
 # CONFIG FUNCTIONS
 
 def config_root(root):

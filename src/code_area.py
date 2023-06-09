@@ -114,6 +114,7 @@ class CodeArea(tk.Frame):
         self.input_text.see("1.0")
         self.input_text.mark_set("insert", "1.0")
         self.buffer_bar.select_tab(buffer)
+        self.event_generate("<<BufferOpened>>")
     
     def close_buffer(self, buffer: Buffer):
         if self.current_buffer is not None and self.current_buffer == buffer:
@@ -139,14 +140,12 @@ class CodeArea(tk.Frame):
         self.update_scroll()
     
     def update_line_highlight(self, event):
-        print("YAY")
         # Reset the tag before adding it
         self.line_numbers.tag_remove("highlight", "1.0", tk.END)
         cursor_pos = self.input_text.index(tk.INSERT)
         line, column = cursor_pos.split('.')
         start_index = f"{line}.0"
         end_index = f"{line}.end"
-        print(line)
         self.line_numbers.tag_add("highlight", start_index, end_index)
 
     def yview(self, *args):
