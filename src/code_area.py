@@ -9,6 +9,7 @@ class Buffer:
         self.name = name
         self.file_path = file_path
         self.language = language
+        self.has_unsaved_changes = False
     
     def __eq__(self, __value: object) -> bool:
         return self.file_path == __value.file_path
@@ -32,6 +33,10 @@ class BufferTab(tk.Frame):
         # Configure grid layout
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, minsize=0)
+    
+    def update(self):
+        if self.buffer.has_unsaved_changes and not self.open_button.cget("text").startswith("*"):
+            self.open_button.config(text=f"*{self.buffer.name}")
     
 class BufferBar(tk.Frame):
     def __init__(self, root, code_area, **kwargs):
@@ -73,6 +78,9 @@ class CodeArea(tk.Frame):
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")
         self.input_text.bind("<<Modified>>", self.update_line_numbers)
+        self.input_text.bind("<<Modified>>", lambda _: self.event_generate("<<BufferModified>>"), add='+')
+        self.bind("<<BufferModified>>", lambda _: setattr(self.current_buffer, "has_unsaved_changes", True), add='+')
+        self.bind("<<BufferModified>>", lambda _: self.buffer_bar.selected_tab.update(), add='+')
         self.input_text.bind("<MouseWheel>", self.update_scroll)  # For Windows and macOS
         self.input_text.bind("<Button-5>", self.update_scroll)    # For Linux
         self.input_text.bind("<Configure>", self.update_scroll)
