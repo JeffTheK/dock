@@ -73,7 +73,7 @@ class CodeArea(tk.Frame):
         self.buffer_bar.grid(row=0, column=0, columnspan=2, sticky="we")
         self.line_numbers = tk.Text(self, **config.CODE_AREA.LINE_NUMBERS_KWARGS)
         self.line_numbers.grid(row=1, column=0, sticky="nsew")
-        self.input_text = tk.Text(self, width=40, height=10, yscrollcommand=self.update_scroll, wrap="word")
+        self.input_text = tk.Text(self, width=40, height=10, yscrollcommand=self.update_scroll, wrap=tk.CHAR)
         self.scrollbar = tk.Scrollbar(self, command=self.yview)
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")
@@ -139,13 +139,14 @@ class CodeArea(tk.Frame):
             else:
                 display_lines_count = self.input_text.count(f"{x+1}.0", f"{x+1}.end", "displaylines")
                 if display_lines_count is not None and display_lines_count[0] > 0:
-                    self.line_numbers.insert(tk.END, str(x + 1) + '\n' + '\n'*display_lines_count[0])
+                    self.line_numbers.insert(tk.END, str(x + 1) + '\n' + ' \n'*display_lines_count[0])
                 else:
                     self.line_numbers.insert(tk.END, str(x + 1) + '\n')
 
         self.line_numbers.tag_add("right_align", "1.0", tk.END)
         self.input_text.edit_modified(False)
         self.update_scroll()
+        self.update_line_highlight(None)
     
     def display_lines_count(self, start, end):
         display_lines_count = self.input_text.count(start, end, "displaylines")
