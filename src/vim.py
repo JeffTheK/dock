@@ -59,16 +59,36 @@ def handle_key(event, code_area: CodeArea):
         elif event.keysym == 'j':
             # Move Down
             new_index = code_area.input_text.index(f"{index} linestart +1 line")
-            code_area.input_text.mark_set(tk.INSERT, new_index)
-            code_area.input_text.see(tk.INSERT)
-            code_area.event_generate("<<AfterCursorMove>>")
+            if code_area.display_lines_count(index, new_index) == 0:
+                code_area.input_text.mark_set(tk.INSERT, new_index)
+                code_area.input_text.see(tk.INSERT)
+                code_area.event_generate("<<AfterCursorMove>>")
+            else:
+                lines = code_area.input_text.get("1.0", tk.END).splitlines(keepends=True)
+                line1 = lines[int(index.split('.')[0]) - 1]
+                y, x = index.split('.')
+                endline_index = line1.index('\n')
+                new_index = f"{y}.{endline_index}"
+                code_area.input_text.mark_set(tk.INSERT, new_index)
+                code_area.input_text.see(tk.INSERT)
+                code_area.event_generate("<<AfterCursorMove>>")
             return 'break'
         elif event.keysym == 'k':
             # Move Up
             new_index = code_area.input_text.index(f"{index} linestart -1 line")
-            code_area.input_text.mark_set(tk.INSERT, new_index)
-            code_area.input_text.see(tk.INSERT)
-            code_area.event_generate("<<AfterCursorMove>>")
+            if code_area.display_lines_count(index, new_index) == 0:
+                code_area.input_text.mark_set(tk.INSERT, new_index)
+                code_area.input_text.see(tk.INSERT)
+                code_area.event_generate("<<AfterCursorMove>>")
+            else:
+                lines = code_area.input_text.get("1.0", tk.END).splitlines(keepends=True)
+                line1 = lines[int(index.split('.')[0]) - 1]
+                y, x = index.split('.')
+                endline_index = line1.index('\n')
+                new_index = new_index = code_area.input_text.index(f"{index} -{len(line1)} c")
+                code_area.input_text.mark_set(tk.INSERT, new_index)
+                code_area.input_text.see(tk.INSERT)
+                code_area.event_generate("<<AfterCursorMove>>")
             return 'break'
         else:
             return 'break'
