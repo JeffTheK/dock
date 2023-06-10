@@ -1,3 +1,17 @@
+from PIL import ImageTk, Image
+
+def resized_icon(image_path, size):
+    # Open the original icon image
+    image = Image.open(image_path)
+
+    # Resize the image to the desired dimensions
+    resized_image = image.resize(size)
+
+    # Convert the resized image to ImageTk.PhotoImage
+    photo_image = ImageTk.PhotoImage(resized_image)
+
+    return photo_image
+
 # CONFIG VARIABLES
 
 IS_VIM_ENABLED = True
@@ -24,6 +38,9 @@ class STATUS_BAR:
 
 class FILE_TREE:
     KWARGS = {"row": 0, "column": 0, "sticky": "nsew"}
+    FILE_ICON = None
+    FOLDER_OPEN_ICON = None
+    FOLDER_CLOSED_ICON = None
 
 class SYNTAX:
     SUPPORTED_LANGUAGES = ["python"]
@@ -60,3 +77,6 @@ def config_status_bar(status_bar):
 
 def config_file_tree(file_tree):
     file_tree.grid(**FILE_TREE.KWARGS)
+    FILE_TREE.FILE_ICON = resized_icon("icon/file.png", (16, 16))
+    FILE_TREE.FOLDER_OPEN_ICON = resized_icon("icon/folder_open.png", (16, 16))
+    FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("icon/folder_closed.png", (16, 16))
