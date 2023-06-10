@@ -34,7 +34,7 @@ class CODE_AREA:
     LINE_NUMBERS_KWARGS = {"width": 6, "height": 10}
 
 class STATUS_BAR:
-    KWARGS = {"row": 2, "column": 0, "sticky": "nsew"}
+    KWARGS = {"row": 2, "column": 0, "sticky": "nsew", "columnspan": 2}
 
 class FILE_TREE:
     KWARGS = {"row": 0, "column": 0, "sticky": "nsew", "rowspan": 2}
