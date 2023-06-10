@@ -78,6 +78,7 @@ class CodeArea(tk.Frame):
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")
         self.input_text.bind("<<Modified>>", self.update_line_numbers)
+        self.input_text.bind("<KeyRelease>", self.update_line_highlight)
         self.input_text.bind("<<Modified>>", lambda _: self.event_generate("<<BufferModified>>"), add='+')
         self.bind("<<BufferModified>>", lambda _: setattr(self.current_buffer, "has_unsaved_changes", True), add='+')
         self.bind("<<BufferModified>>", lambda _: self.buffer_bar.selected_tab.update(), add='+')
