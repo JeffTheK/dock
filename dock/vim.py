@@ -1,7 +1,7 @@
 import tkinter as tk
-from code_area import CodeArea
-from status_bar import StatusBar
-from utils import load_config
+from .code_area import CodeArea
+from .status_bar import StatusBar
+from .utils import load_config
 
 config = load_config()
 

@@ -1,5 +1,5 @@
-from utils import load_config
-from code_area import CodeArea
+from .utils import load_config
+from .code_area import CodeArea
 import os
 import tkinter as tk
 import re

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils import load_config
+from .utils import load_config
 import os
 
 config = load_config()

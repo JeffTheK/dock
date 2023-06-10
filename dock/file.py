@@ -1,8 +1,8 @@
 import tkinter as tk
 import os
 from tkinter import filedialog
-from code_area import CodeArea, Buffer
-from file_tree import FileTree
+from .code_area import CodeArea, Buffer
+from .file_tree import FileTree
 
 def ask_open_file(code_area: CodeArea):
     file_path = filedialog.askopenfilename()

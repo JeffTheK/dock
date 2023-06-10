@@ -1,5 +1,5 @@
 import tkinter as tk
-from utils import load_config
+from .utils import load_config
 
 config = load_config()
 
