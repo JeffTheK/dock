@@ -24,6 +24,11 @@ def open_directory(file_tree: FileTree):
         return
     file_tree.rebuild(path)
 
+def open_directory(file_tree: FileTree, path: str):
+    if path == () or path == "":
+        return
+    file_tree.rebuild(path)
+
 def save_buffer_to_file(buffer: Buffer):
     file_path = buffer.file_path
     if (file_path is None):

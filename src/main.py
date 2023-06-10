@@ -45,4 +45,6 @@ menu_bar.add_cascade(label="Settings", menu=settings_menu)
 
 settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: open_file(c, CONFIG_PATH))
 
+open_directory(file_tree, ".")
+
 root.mainloop()
