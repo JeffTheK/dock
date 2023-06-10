@@ -86,6 +86,7 @@ class CodeArea(tk.Frame):
         self.input_text.bind("<Configure>", self.update_scroll)
         self.bind("<<AfterCursorMove>>", self.update_line_highlight, add='+')
         self.input_text.bind("<<Modified>>", self.update_line_highlight, add='+')
+        self.bind("<Configure>", self.update_line_numbers, add='+')
         self.line_numbers.tag_configure("highlight", background="#cfcfcf")
         self.line_numbers.tag_configure("right_align", justify="right")
 
@@ -125,6 +126,9 @@ class CodeArea(tk.Frame):
         
         if len(self.buffers) > 0:
             self.open_buffer(self.buffers[-1])
+        
+    def input_text_line_count(self):
+        return self.input_text.count("1.0", tk.END, "displaylines")[0]
     
     def update_line_numbers(self, event):
         self.line_numbers.delete(1.0, tk.END)
@@ -133,17 +137,30 @@ class CodeArea(tk.Frame):
             if x == line_count - 1:
                 self.line_numbers.insert(tk.END, str(x + 1))
             else:
-                self.line_numbers.insert(tk.END, str(x + 1) + '\n')
+                display_lines_count = self.input_text.count(f"{x+1}.0", f"{x+1}.end", "displaylines")
+                if display_lines_count is not None and display_lines_count[0] > 0:
+                    self.line_numbers.insert(tk.END, str(x + 1) + '\n' + '\n'*display_lines_count[0])
+                else:
+                    self.line_numbers.insert(tk.END, str(x + 1) + '\n')
 
         self.line_numbers.tag_add("right_align", "1.0", tk.END)
         self.input_text.edit_modified(False)
         self.update_scroll()
+    
+    def display_lines_count(self, start, end):
+        display_lines_count = self.input_text.count(start, end, "displaylines")
+        normal_lines_count = int(end.split('.')[0]) - int(start.split('.')[0])
+        if display_lines_count is None:
+            return 0
+        return display_lines_count[0] - normal_lines_count
     
     def update_line_highlight(self, event):
         # Reset the tag before adding it
         self.line_numbers.tag_remove("highlight", "1.0", tk.END)
         cursor_pos = self.input_text.index(tk.INSERT)
         line, column = cursor_pos.split('.')
+        display_lines_count = self.display_lines_count(f"1.0", f"{line}.{column}")
+        line = int(line) + display_lines_count
         start_index = f"{line}.0"
         end_index = f"{line}.end"
         self.line_numbers.tag_add("highlight", start_index, end_index)
