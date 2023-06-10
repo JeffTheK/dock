@@ -47,4 +47,6 @@ settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: ope
 
 open_directory(file_tree, ".")
 
+root.eval('tk::PlaceWindow . center')
+
 root.mainloop()
