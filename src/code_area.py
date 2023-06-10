@@ -73,7 +73,7 @@ class CodeArea(tk.Frame):
         self.buffer_bar.grid(row=0, column=0, columnspan=2, sticky="we")
         self.line_numbers = tk.Text(self, **config.CODE_AREA.LINE_NUMBERS_KWARGS)
         self.line_numbers.grid(row=1, column=0, sticky="nsew")
-        self.input_text = tk.Text(self, width=40, height=10, yscrollcommand=self.update_scroll)
+        self.input_text = tk.Text(self, width=40, height=10, yscrollcommand=self.update_scroll, wrap="word")
         self.scrollbar = tk.Scrollbar(self, command=self.yview)
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")

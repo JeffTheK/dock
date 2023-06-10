@@ -57,7 +57,7 @@ class SYNTAX:
             "not": "purple"
         }
     }
-    SEPARATORS = {"python": " \n:,."}
+    SEPARATORS = {"python": [' ', '\n', ':', ',', '.']}
 
 # CONFIG FUNCTIONS
 

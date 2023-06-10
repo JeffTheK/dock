@@ -2,6 +2,7 @@ from utils import load_config
 from code_area import CodeArea
 import os
 import tkinter as tk
+import re
 
 config = load_config()
 
@@ -26,17 +27,22 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
         text_widget.tag_config(word, foreground=color)
     
     text = text_widget.get("1.0", tk.END)
-    lines = text.split('\n')
+    lines = text.splitlines(keepends=True)
+    for x in range(len(lines)):
+        for s in separators:
+            lines[x] = lines[x].replace(s, '$')
     line_num = 1
-    while line_num < text.count("\n"):
-        for word in words_and_colors.keys():
-            line_text = lines[line_num - 1]
-            position = line_text.find(word)
-            if position != -1:
-                start = f"{line_num}.{position}"
-                end = f"{line_num}.{position + len(word)}"
-                print(start)
-                text_widget.tag_add(word, start, end)
+    while line_num <= len(lines):
+        line_text = lines[line_num - 1]
+        for keyword in words_and_colors.keys():
+            word_index = line_text.find(keyword)
+            if word_index != -1:
+                if (word_index - 1 >= 0) and (line_text[word_index - 1] != '$'):
+                    continue
+                start = f"{line_num}.{word_index}"
+                end = f"{line_num}.{word_index + len(keyword)}"
+                #print(keyword + " " + start + ":" + end)
+                text_widget.tag_add(keyword, start, end)
         line_num += 1
 
 def update_syntax_highlighting(code_area: CodeArea):
