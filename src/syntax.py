@@ -47,7 +47,7 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
 
 def update_syntax_highlighting(code_area: CodeArea):
     buffer = code_area.current_buffer
-    if buffer.language is None or buffer.language not in config.SYNTAX.SUPPORTED_LANGUAGES:
+    if buffer is None or buffer.language is None or buffer.language not in config.SYNTAX.SUPPORTED_LANGUAGES:
         return
 
     highlight_words(code_area.input_text, config.SYNTAX.KEYWORDS[buffer.language], config.SYNTAX.SEPARATORS[buffer.language])

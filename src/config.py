@@ -34,13 +34,17 @@ class CODE_AREA:
     LINE_NUMBERS_KWARGS = {"width": 6, "height": 10}
 
 class STATUS_BAR:
-    KWARGS = {"row": 1, "column": 0, "sticky": "nsew"}
+    KWARGS = {"row": 2, "column": 0, "sticky": "nsew"}
 
 class FILE_TREE:
-    KWARGS = {"row": 0, "column": 0, "sticky": "nsew"}
+    KWARGS = {"row": 0, "column": 0, "sticky": "nsew", "rowspan": 2}
     FILE_ICON = None
     FOLDER_OPEN_ICON = None
     FOLDER_CLOSED_ICON = None
+
+class TERMINAL:
+    KWARGS = {"row": 1, "column": 1, "sticky": "nsew"}
+    PROMPT = ">>> "
 
 class SYNTAX:
     SUPPORTED_LANGUAGES = ["python"]
@@ -80,3 +84,6 @@ def config_file_tree(file_tree):
     FILE_TREE.FILE_ICON = resized_icon("icon/file.png", (16, 16))
     FILE_TREE.FOLDER_OPEN_ICON = resized_icon("icon/folder_open.png", (16, 16))
     FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("icon/folder_closed.png", (16, 16))
+
+def config_terminal(terminal):
+    terminal.grid(**TERMINAL.KWARGS)

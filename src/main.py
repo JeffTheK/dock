@@ -3,6 +3,7 @@ from tkinter import scrolledtext
 from code_area import CodeArea
 from status_bar import StatusBar
 from file_tree import FileTree
+from terminal import Terminal
 from file import ask_open_file, open_directory, open_file
 from vim import setup_vim
 from utils import load_config, CONFIG_PATH
@@ -21,6 +22,9 @@ config.config_status_bar(status_bar)
 
 file_tree = FileTree(root, code_area)
 config.config_file_tree(file_tree)
+
+terminal = Terminal(root)
+config.config_terminal(terminal)
 
 setup_vim(code_area, status_bar)
 setup_syntax(code_area)
