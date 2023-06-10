@@ -37,7 +37,8 @@ root.config(menu=menu_bar)
 file_menu = tk.Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="File", menu=file_menu)
 
-# Add the "Open" option to the "File" menu
+file_menu.add_command(label="New File", command=lambda c=code_area: c.new_buffer())
+
 file_menu.add_command(label="Open File", command=lambda c=code_area: ask_open_file(c))
 file_menu.add_command(label="Open Folder", command=lambda f=file_tree: open_directory(f))
 

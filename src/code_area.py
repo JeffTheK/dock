@@ -12,7 +12,7 @@ class Buffer:
         self.has_unsaved_changes = False
     
     def __eq__(self, __value: object) -> bool:
-        return self.file_path == __value.file_path
+        return self.file_path == __value.file_path and self.name == __value.name
     
     def __repr__(self) -> str:
         return self.file_path
@@ -93,11 +93,20 @@ class CodeArea(tk.Frame):
         self.grid_rowconfigure(1, weight=1)  # Make the first row expand vertically
         self.grid_columnconfigure(1, weight=1)  # Make the third column expand horizontally
 
-        default_buffer = Buffer("", config.CODE_AREA.UNTITLED_BUFFER_NAME, None, None)
-        self.open_buffer(default_buffer)
+        self.new_buffer()
     
     def clear_input_text(self):
         self.input_text.delete("1.0", "end")
+    
+    def new_buffer(self):
+        buffer = Buffer("", config.CODE_AREA.UNTITLED_BUFFER_NAME, None, None)
+        if self.buffers.count(buffer) != 0:
+            i = 1
+            while self.buffers.count(buffer) != 0:
+                buffer.name = f"{config.CODE_AREA.UNTITLED_BUFFER_NAME}-{str(i)}"
+                i += 1
+
+        self.open_buffer(buffer)
     
     def open_buffer(self, buffer: Buffer):
         if self.current_buffer is not None and self.current_buffer == buffer:
