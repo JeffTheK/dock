@@ -26,7 +26,7 @@ def merge_instance_variables(source_cls, target_obj):
 
 # CONFIG VARIABLES
 
-ENABLED_PLUGINS = ["vim"]
+ENABLED_PLUGINS = ["vim", "python"]
 PLUGINS_DIR = pkg_resources.resource_filename("dock", "plugins")
 
 class ROOT:
