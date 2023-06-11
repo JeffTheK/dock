@@ -13,7 +13,9 @@ THEMES = {
         keyword_color="purple",
         operator_color="blue",
         comment_color="green",
-        string_color="yellow"
+        string_color="yellow",
+        status_bar_bg="#3268a8",
+        status_bar_text_fg="white"
     )
 }
 CURRENT_THEME_NAME = "default-light"
