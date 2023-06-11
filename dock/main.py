@@ -28,8 +28,6 @@ def main():
     terminal = Terminal(root)
     config.config_terminal(terminal)
 
-    setup_syntax(code_area)
-
     # Create the menu bar
     menu_bar = tk.Menu(root)
     root.config(menu=menu_bar)
@@ -57,6 +55,7 @@ def main():
 
     app = App(code_area, file_tree, status_bar, terminal)
 
+    setup_syntax(app)
     init_plugins(app)
 
     root.mainloop()

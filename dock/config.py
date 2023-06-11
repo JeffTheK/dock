@@ -18,6 +18,12 @@ def resized_icon(image_path, size):
 
     return photo_image
 
+def merge_instance_variables(source_cls, target_obj):
+    for attribute_name in dir(source_cls):
+        if not attribute_name.startswith('__'):
+            attribute_value = getattr(source_cls, attribute_name)
+            setattr(target_obj, attribute_name, attribute_value)
+
 # CONFIG VARIABLES
 
 ENABLED_PLUGINS = ["vim"]

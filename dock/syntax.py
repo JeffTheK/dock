@@ -1,16 +1,23 @@
 from .utils import load_config
 from .code_area import CodeArea
+from .app import App
 import os
 import tkinter as tk
 import re
 
 config = load_config()
 
-def setup_syntax(code_area: CodeArea):
-    code_area.bind("<<BufferOpened>>", lambda _, c=code_area: on_buffer_opened(c))
-    code_area.bind("<<BufferModified>>", lambda _, c=code_area: update_syntax_highlighting(c))
+class Syntax:
+    pass
 
-def on_buffer_opened(code_area: CodeArea):
+def setup_syntax(app: App):
+    code_area = app.code_area
+    app.syntax = Syntax()
+    config.merge_instance_variables(config.SYNTAX, app.syntax)
+    code_area.bind("<<BufferOpened>>", lambda _, c=code_area, a=app: on_buffer_opened(c, a))
+    code_area.bind("<<BufferModified>>", lambda _, c=code_area, a=app: update_syntax_highlighting(c, a))
+
+def on_buffer_opened(code_area: CodeArea, app: App):
     if code_area.current_buffer.language is None:
         return
 
@@ -19,7 +26,7 @@ def on_buffer_opened(code_area: CodeArea):
 
     _, file_extension = os.path.splitext(code_area.current_buffer.file_path)
     print(file_extension)
-    code_area.current_buffer.language = determine_language_from_extension(file_extension)
+    code_area.current_buffer.language = determine_language_from_extension(file_extension, app)
     print(code_area.current_buffer.language)
 
 def highlight_words(text_widget, words_and_colors: dict, separators: list):
@@ -45,16 +52,16 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
                 text_widget.tag_add(keyword, start, end)
         line_num += 1
 
-def update_syntax_highlighting(code_area: CodeArea):
+def update_syntax_highlighting(code_area: CodeArea, app: App):
     buffer = code_area.current_buffer
     if buffer is None or buffer.language is None or buffer.language not in config.SYNTAX.SUPPORTED_LANGUAGES:
         return
 
-    highlight_words(code_area.input_text, config.SYNTAX.KEYWORDS[buffer.language], config.SYNTAX.SEPARATORS[buffer.language])
+    highlight_words(code_area.input_text, app.syntax.KEYWORDS[buffer.language], app.syntax.SEPARATORS[buffer.language])
 
-def determine_language_from_extension(extension: str):
-    for lang in config.SYNTAX.SUPPORTED_LANGUAGES:
-        if extension in config.SYNTAX.FILE_EXTENSIONS[lang]:
+def determine_language_from_extension(extension: str, app: App):
+    for lang in app.syntax.SUPPORTED_LANGUAGES:
+        if extension in app.syntax.FILE_EXTENSIONS[lang]:
             return lang
     
     return None
