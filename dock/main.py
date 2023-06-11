@@ -5,7 +5,8 @@ from .status_bar import StatusBar
 from .file_tree import FileTree
 from .terminal import Terminal
 from .file import ask_open_file, open_directory, open_file
-from .vim import setup_vim
+from .app import App
+from .plugin import init_plugins
 from .utils import load_config, CONFIG_FILE_PATH
 from .syntax import setup_syntax
 
@@ -27,7 +28,6 @@ def main():
     terminal = Terminal(root)
     config.config_terminal(terminal)
 
-    setup_vim(code_area, status_bar)
     setup_syntax(code_area)
 
     # Create the menu bar
@@ -54,6 +54,10 @@ def main():
     open_directory(file_tree, ".")
 
     root.eval('tk::PlaceWindow . center')
+
+    app = App(code_area, file_tree, status_bar, terminal)
+
+    init_plugins(app)
 
     root.mainloop()
 

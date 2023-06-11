@@ -1,14 +1,14 @@
 import tkinter as tk
-from .code_area import CodeArea
-from .status_bar import StatusBar
-from .utils import load_config
+from dock.code_area import CodeArea
+from dock.status_bar import StatusBar
+from dock.utils import load_config
 
 config = load_config()
 
-def setup_vim(code_area: CodeArea, status_bar: StatusBar):
-    if not config.IS_VIM_ENABLED:
-        return
+def plugin_main(app):
+    setup_vim(app.code_area, app.status_bar)
 
+def setup_vim(code_area: CodeArea, status_bar: StatusBar):
     setup_vim_code_area(code_area)
     setup_vim_status_bar(status_bar, code_area)
 

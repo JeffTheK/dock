@@ -20,7 +20,8 @@ def resized_icon(image_path, size):
 
 # CONFIG VARIABLES
 
-IS_VIM_ENABLED = True
+ENABLED_PLUGINS = ["vim"]
+PLUGINS_DIR = pkg_resources.resource_filename("dock", "plugins")
 
 class ROOT:
     TITLE = "Dock"
