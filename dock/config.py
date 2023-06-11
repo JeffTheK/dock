@@ -1,11 +1,22 @@
 import pkg_resources
 import os
 from dock.utils import resized_icon
+from dock.theme import Theme
 
 # CONFIG VARIABLES
 
 ENABLED_PLUGINS = ["vim", "python"]
 PLUGINS_DIR = pkg_resources.resource_filename("dock", "plugins")
+THEMES = {
+    "default-light": Theme(
+        name="default-light",
+        keyword_color="purple",
+        operator_color="blue",
+        comment_color="green",
+        string_color="yellow"
+    )
+}
+CURRENT_THEME_NAME = "default-light"
 
 class ROOT:
     TITLE = "Dock"

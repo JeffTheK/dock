@@ -1,6 +1,7 @@
 from .utils import load_config, merge_instance_variables
 from .code_area import CodeArea
 from .app import App
+from .theme import Theme
 import os
 import tkinter as tk
 import re
@@ -49,9 +50,8 @@ def highlight_block(text_widget, start_char, end_char, color):
         text_widget.tag_add(f"{start_char}{end_char}", start, end)
         start = end
 
-def highlight_words(text_widget, words_and_colors: dict, separators: list):
-    for word, color in words_and_colors.items():
-        text_widget.tag_config(word, foreground=color)
+def highlight_words(text_widget, keywords: list, separators: list, theme: Theme):
+    text_widget.tag_config("keyword", foreground=theme.keyword_color)
     
     text = text_widget.get("1.0", tk.END)
     lines = text.splitlines(keepends=True)
@@ -61,7 +61,7 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
     line_num = 1
     while line_num <= len(lines):
         line_text = lines[line_num - 1]
-        for keyword in words_and_colors.keys():
+        for keyword in keywords:
             word_index = line_text.find(keyword)
             if word_index != -1:
                 if (word_index - 1 >= 0) and (line_text[word_index - 1] != '$'):
@@ -69,7 +69,7 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
                 start = f"{line_num}.{word_index}"
                 end = f"{line_num}.{word_index + len(keyword)}"
                 #print(keyword + " " + start + ":" + end)
-                text_widget.tag_add(keyword, start, end)
+                text_widget.tag_add("keyword", start, end)
         line_num += 1
 
 def clear_tags(code_area: CodeArea):
@@ -84,9 +84,9 @@ def update_syntax_highlighting(code_area: CodeArea, app: App):
     if buffer is None or buffer.language is None or buffer.language not in app.syntax.SUPPORTED_LANGUAGES:
         return
 
-    highlight_words(code_area.input_text, app.syntax.KEYWORDS[buffer.language], app.syntax.SEPARATORS[buffer.language])
+    highlight_words(code_area.input_text, app.syntax.KEYWORDS[buffer.language], app.syntax.SEPARATORS[buffer.language], app.current_theme)
     for block_chars in app.syntax.BLOCKS[buffer.language].keys():
-        color = app.syntax.BLOCKS[buffer.language][block_chars]
+        color = app.current_theme.comment_color
         code_area.input_text.tag_config(f"{block_chars[0]}{block_chars[1]}", foreground=color)
         highlight_block(code_area.input_text, block_chars[0], block_chars[1], color)
 

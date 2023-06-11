@@ -10,6 +10,7 @@ from .plugin import init_plugins
 from .plugin_manager import PluginManager
 from .utils import load_config, restore_default_config, CONFIG_FILE_PATH
 from .syntax import setup_syntax
+from .theme import setup_theme
 
 def main():
     config = load_config()
@@ -66,6 +67,8 @@ def main():
 
     setup_syntax(app)
     init_plugins(app)
+
+    setup_theme(config.THEMES[config.CURRENT_THEME_NAME], app)
 
     root.mainloop()
 
