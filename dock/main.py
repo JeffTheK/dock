@@ -6,7 +6,7 @@ from .file_tree import FileTree
 from .terminal import Terminal
 from .file import ask_open_file, open_directory, open_file
 from .vim import setup_vim
-from .utils import load_config, CONFIG_PATH
+from .utils import load_config, CONFIG_FILE_PATH
 from .syntax import setup_syntax
 
 def main():
@@ -49,7 +49,7 @@ def main():
     settings_menu = tk.Menu(menu_bar, tearoff=False)
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
 
-    settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: open_file(c, CONFIG_PATH))
+    settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: open_file(c, CONFIG_FILE_PATH))
 
     open_directory(file_tree, ".")
 

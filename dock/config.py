@@ -1,8 +1,14 @@
 from PIL import ImageTk, Image
+import pkg_resources
+import os
 
 def resized_icon(image_path, size):
+    data_dir_path = pkg_resources.resource_filename("dock", '')
+
+    full_path = os.path.join(data_dir_path, image_path)
+
     # Open the original icon image
-    image = Image.open(image_path)
+    image = Image.open(full_path)
 
     # Resize the image to the desired dimensions
     resized_image = image.resize(size)
@@ -81,9 +87,9 @@ def config_status_bar(status_bar):
 
 def config_file_tree(file_tree):
     file_tree.grid(**FILE_TREE.KWARGS)
-    FILE_TREE.FILE_ICON = resized_icon("icon/file.png", (16, 16))
-    FILE_TREE.FOLDER_OPEN_ICON = resized_icon("icon/folder_open.png", (16, 16))
-    FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("icon/folder_closed.png", (16, 16))
+    FILE_TREE.FILE_ICON = resized_icon("data/file.png", (16, 16))
+    FILE_TREE.FOLDER_OPEN_ICON = resized_icon("data/folder_open.png", (16, 16))
+    FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("data/folder_closed.png", (16, 16))
 
 def config_terminal(terminal):
     terminal.grid(**TERMINAL.KWARGS)

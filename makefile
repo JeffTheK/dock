@@ -9,5 +9,5 @@ install: build
 	pip install -r requirements.txt
 	pip install .
 
-run: install
+run:
 	dock

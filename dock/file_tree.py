@@ -42,7 +42,7 @@ class FileTree(tk.Frame):
                 self.tree.item(item_id, image=config.FILE_TREE.FILE_ICON)
     
     def open_item(self, event):
-        from file import open_file
+        from .file import open_file
         item = self.tree.selection()
         if item:
             item_text = self.tree.item(item)["text"]
