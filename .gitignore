@@ -164,5 +164,3 @@ cython_debug/
 # Dummy files for testing
 example.txt
 example.py
-
-*.png
