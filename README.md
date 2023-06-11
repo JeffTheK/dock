@@ -2,6 +2,8 @@
 
 A text editor made in python using tkinter
 
+![Screenshot](pics/pic01.png)
+
 ## Installation
 
 clone the git repo and run these commands:
@@ -18,7 +20,7 @@ Dock can be configured extensively by modifying `config.py` located in `~/.dock`
 
 ## Plugins
 
-Dock supports plugins made in python. The program will look into `config.PLUGINS_DIR` directory and initializing each plugin 
+Dock supports plugins made in python. The program will look into `config.PLUGINS_DIR` directory and initialize each plugin 
 defined in `config.ENABLED_PLUGINS` by importing `main.py` from plugin root directory and executing `plugin_main(app: App)`.
 Currently `config.PLUGINS_DIR` is located in `dock` package folder
 
