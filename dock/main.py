@@ -8,7 +8,7 @@ from .file import ask_open_file, open_directory, open_file
 from .app import App
 from .plugin import init_plugins
 from .plugin_manager import PluginManager
-from .utils import load_config, CONFIG_FILE_PATH
+from .utils import load_config, restore_default_config, CONFIG_FILE_PATH
 from .syntax import setup_syntax
 
 def main():
@@ -54,6 +54,7 @@ def main():
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
 
     settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: open_file(c, CONFIG_FILE_PATH))
+    settings_menu.add_command(label="Restore Default Settings", command=lambda r=root: restore_default_config(r))
     settings_menu.add_command(label="View Plugins", command=lambda a=app: (
         app.plugin_manager.toggle(),
         app.file_tree.toggle()
