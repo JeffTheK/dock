@@ -12,3 +12,6 @@ def plugin_main(app):
         "not": "purple"
     }
     app.syntax.SEPARATORS["python"] = [' ', '\n', ':', ',', '.']
+    app.syntax.BLOCKS["python"] = {
+        ('#', '\n'): "green"
+    }

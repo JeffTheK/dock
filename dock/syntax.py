@@ -29,6 +29,23 @@ def on_buffer_opened(code_area: CodeArea, app: App):
     code_area.current_buffer.language = determine_language_from_extension(file_extension, app)
     print(code_area.current_buffer.language)
 
+def highlight_block(text_widget, start_char, end_char, color):
+    # Get all text content in the Text widget
+    content = text_widget.get("1.0", "end")
+
+    # Find comment sections and apply the tag
+    start = "1.0"
+    while True:
+        start = text_widget.search(start_char, start, "end")
+        if not start:
+            break
+
+        end = text_widget.search(end_char, start, "end")
+        if not end:
+            end = "end"
+        text_widget.tag_add(f"{start_char}{end_char}", start, end)
+        start = end
+
 def highlight_words(text_widget, words_and_colors: dict, separators: list):
     for word, color in words_and_colors.items():
         text_widget.tag_config(word, foreground=color)
@@ -52,12 +69,24 @@ def highlight_words(text_widget, words_and_colors: dict, separators: list):
                 text_widget.tag_add(keyword, start, end)
         line_num += 1
 
+def clear_tags(code_area: CodeArea):
+    all_tags = code_area.input_text.tag_names()
+    for tag in all_tags:
+        code_area.input_text.tag_delete(tag)
+
 def update_syntax_highlighting(code_area: CodeArea, app: App):
+    print("Updating syntax")
+    clear_tags(code_area)
+
     buffer = code_area.current_buffer
-    if buffer is None or buffer.language is None or buffer.language not in config.SYNTAX.SUPPORTED_LANGUAGES:
+    if buffer is None or buffer.language is None or buffer.language not in app.syntax.SUPPORTED_LANGUAGES:
         return
 
     highlight_words(code_area.input_text, app.syntax.KEYWORDS[buffer.language], app.syntax.SEPARATORS[buffer.language])
+    for block_chars in app.syntax.BLOCKS[buffer.language].keys():
+        color = app.syntax.BLOCKS[buffer.language][block_chars]
+        code_area.input_text.tag_config(f"{block_chars[0]}{block_chars[1]}", foreground=color)
+        highlight_block(code_area.input_text, block_chars[0], block_chars[1], color)
 
 def determine_language_from_extension(extension: str, app: App):
     for lang in app.syntax.SUPPORTED_LANGUAGES:

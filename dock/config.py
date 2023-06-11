@@ -1,6 +1,6 @@
 import pkg_resources
 import os
-from .utils import resized_icon
+from dock.utils import resized_icon
 
 # CONFIG VARIABLES
 
@@ -41,21 +41,11 @@ class TERMINAL:
     PROMPT = ">>> "
 
 class SYNTAX:
-    SUPPORTED_LANGUAGES = ["python"]
-    FILE_EXTENSIONS = {"python": [".py"]}
-    KEYWORDS = {
-        "python": {
-            "def": "blue",
-            "while": "blue",
-            "return": "blue",
-            "class": "blue",
-            "if": "purple",
-            "else": "purple",
-            "or": "purple",
-            "not": "purple"
-        }
-    }
-    SEPARATORS = {"python": [' ', '\n', ':', ',', '.']}
+    SUPPORTED_LANGUAGES = []
+    FILE_EXTENSIONS = {}
+    KEYWORDS = {}
+    SEPARATORS = {}
+    BLOCKS = {}
 
 # CONFIG FUNCTIONS
 
