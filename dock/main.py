@@ -37,7 +37,8 @@ def main():
     menu_bar = tk.Menu(root)
     root.config(menu=menu_bar)
 
-    app = App(code_area, file_tree, status_bar, terminal, plugin_manager)
+    app = App(root, code_area, file_tree, status_bar, terminal, plugin_manager)
+    app.THEMES = config.THEMES
 
     # Create the "File" menu
     file_menu = tk.Menu(menu_bar, tearoff=False)
@@ -67,6 +68,11 @@ def main():
 
     setup_syntax(app)
     init_plugins(app)
+
+    theme_menu = tk.Menu(settings_menu, tearoff=False)
+    settings_menu.add_cascade(label="Change Theme", menu=theme_menu)
+    for theme in app.THEMES.values():
+        theme_menu.add_command(label=theme.name, command=lambda t=theme, a=app: setup_theme(t, a))
 
     setup_theme(config.THEMES[config.CURRENT_THEME_NAME], app)
 
