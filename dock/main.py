@@ -7,6 +7,7 @@ from .terminal import Terminal
 from .file import ask_open_file, open_directory, open_file
 from .app import App
 from .plugin import init_plugins
+from .plugin_manager import PluginManager
 from .utils import load_config, CONFIG_FILE_PATH
 from .syntax import setup_syntax
 
@@ -25,12 +26,17 @@ def main():
     file_tree = FileTree(root, code_area)
     config.config_file_tree(file_tree)
 
+    plugin_manager = PluginManager(root)
+    config.config_plugin_manager(plugin_manager)
+
     terminal = Terminal(root)
     config.config_terminal(terminal)
 
     # Create the menu bar
     menu_bar = tk.Menu(root)
     root.config(menu=menu_bar)
+
+    app = App(code_area, file_tree, status_bar, terminal, plugin_manager)
 
     # Create the "File" menu
     file_menu = tk.Menu(menu_bar, tearoff=False)
@@ -48,12 +54,14 @@ def main():
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
 
     settings_menu.add_command(label="Edit Settings", command=lambda c=code_area: open_file(c, CONFIG_FILE_PATH))
+    settings_menu.add_command(label="View Plugins", command=lambda a=app: (
+        app.plugin_manager.toggle(),
+        app.file_tree.toggle()
+    ))
 
     open_directory(file_tree, ".")
 
     root.eval('tk::PlaceWindow . center')
-
-    app = App(code_area, file_tree, status_bar, terminal)
 
     setup_syntax(app)
     init_plugins(app)

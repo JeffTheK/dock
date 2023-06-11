@@ -55,6 +55,9 @@ class FILE_TREE:
     FOLDER_OPEN_ICON = None
     FOLDER_CLOSED_ICON = None
 
+class PLUGIN_MANAGER:
+    KWARGS = {"row": 0, "column": 0, "sticky": "nsew", "rowspan": 2}
+
 class TERMINAL:
     KWARGS = {"row": 1, "column": 1, "sticky": "nsew"}
     PROMPT = ">>> "
@@ -97,6 +100,10 @@ def config_file_tree(file_tree):
     FILE_TREE.FILE_ICON = resized_icon("data/file.png", (16, 16))
     FILE_TREE.FOLDER_OPEN_ICON = resized_icon("data/folder_open.png", (16, 16))
     FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("data/folder_closed.png", (16, 16))
+
+def config_plugin_manager(plugin_manager):
+    plugin_manager.grid(**PLUGIN_MANAGER.KWARGS)
+    plugin_manager.toggle()
 
 def config_terminal(terminal):
     terminal.grid(**TERMINAL.KWARGS)

@@ -50,3 +50,9 @@ class FileTree(tk.Frame):
             if os.path.isdir(item_path):
                 return
             open_file(self.code_area, item_path)
+    
+    def toggle(self):
+        if self.grid_info():
+            self.grid_remove()
+        else:
+            self.grid()
