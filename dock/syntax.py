@@ -40,7 +40,10 @@ def highlight_block(text_widget, start_char, end_char, color):
         if not start:
             break
 
-        end = text_widget.search(end_char, start, "end")
+        end = text_widget.search(end_char, f"{start}+1c", "end")
+        if start == end:
+            break
+
         if not end:
             end = "end"
         text_widget.tag_add(f"{start_char}{end_char}", start, end)
@@ -75,7 +78,6 @@ def clear_tags(code_area: CodeArea):
         code_area.input_text.tag_delete(tag)
 
 def update_syntax_highlighting(code_area: CodeArea, app: App):
-    print("Updating syntax")
     clear_tags(code_area)
 
     buffer = code_area.current_buffer
