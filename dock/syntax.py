@@ -1,4 +1,4 @@
-from .utils import load_config
+from .utils import load_config, merge_instance_variables
 from .code_area import CodeArea
 from .app import App
 import os
@@ -13,7 +13,7 @@ class Syntax:
 def setup_syntax(app: App):
     code_area = app.code_area
     app.syntax = Syntax()
-    config.merge_instance_variables(config.SYNTAX, app.syntax)
+    merge_instance_variables(config.SYNTAX, app.syntax)
     code_area.bind("<<BufferOpened>>", lambda _, c=code_area, a=app: on_buffer_opened(c, a))
     code_area.bind("<<BufferModified>>", lambda _, c=code_area, a=app: update_syntax_highlighting(c, a))
 
