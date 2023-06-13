@@ -36,7 +36,7 @@ class CODE_AREA:
 
     BUFFER_TAB_HIGHLIGHT_COLOR = "white"
     BUFFER_TAB_OPEN_BUTTON_KWARGS = {"cursor": "hand2", "highlightthickness": 0, "borderwidth": 0}
-    BUFFER_TAB_CLOSE_BUTTON_KWARGS = {"text": 'x', "cursor": "hand2", "highlightthickness": 0, "borderwidth": 0, "width": 1, "height": 1, "padx": 4, "pady": 0}
+    BUFFER_TAB_CLOSE_BUTTON_KWARGS = {"text": 'X', "cursor": "hand2", "highlightthickness": 0, "borderwidth": 0, "width": 1, "height": 1, "padx": 4, "pady": 0, "bg": "#ff9191", "fg": "white"}
 
     LINE_NUMBERS_KWARGS = {"width": 6, "height": 10}
 

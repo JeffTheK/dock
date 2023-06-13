@@ -29,7 +29,7 @@ class BufferTab(tk.Frame):
         self.open_button = tk.Button(self, text=buffer.name, command=lambda buf=buffer: self.code_area.open_buffer(buf), **config.CODE_AREA.BUFFER_TAB_OPEN_BUTTON_KWARGS)
         self.open_button.grid(row=0, column=0, sticky="w")
         self.close_button = tk.Button(self, command=lambda: self.code_area.close_buffer(self.buffer), **config.CODE_AREA.BUFFER_TAB_CLOSE_BUTTON_KWARGS)
-        self.close_button.grid(row=0, column=1)
+        self.close_button.grid(row=0, column=1, padx=4)
 
         # Configure grid layout
         self.columnconfigure(0, weight=1)
