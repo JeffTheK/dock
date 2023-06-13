@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 from .utils import load_config
 
 config = load_config()
@@ -136,6 +137,22 @@ class CodeArea(tk.Frame):
         
         if len(self.buffers) > 0:
             self.open_buffer(self.buffers[-1])
+    
+    def save_buffer(self, buffer: Buffer):
+        file_path = buffer.file_path
+        if (file_path is None):
+            file_path = filedialog.asksaveasfilename()
+            if file_path == () or file_path == "":
+                return
+        file = open(file_path, 'w')
+        file.write(buffer.text)
+        file.close()
+    
+    def save_current_buffer(self):
+        if self.current_buffer is None:
+            return
+
+        self.save_buffer(self.current_buffer)
         
     def input_text_line_count(self):
         return self.input_text.count("1.0", tk.END, "displaylines")[0]
@@ -186,11 +203,3 @@ class CodeArea(tk.Frame):
         line_numbers_scroll = (input_text_scroll[0], input_text_scroll[1])
         self.line_numbers.yview_moveto(str(line_numbers_scroll[0]))
         self.scrollbar.set(*self.input_text.yview())
-    
-    def save_current_buffer(self):
-        from file import save_buffer_to_file
-
-        if self.current_buffer is None:
-            return
-
-        save_buffer_to_file(self.current_buffer)

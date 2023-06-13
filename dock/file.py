@@ -28,13 +28,3 @@ def open_directory(file_tree: FileTree, path: str):
     if path == () or path == "":
         return
     file_tree.rebuild(path)
-
-def save_buffer_to_file(buffer: Buffer):
-    file_path = buffer.file_path
-    if (file_path is None):
-        file_path = filedialog.asksaveasfilename()
-        if file_path == () or file_path == "":
-            return
-    file = open(file_path, 'w')
-    file.write(buffer.text)
-    file.close()
