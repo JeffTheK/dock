@@ -1,5 +1,6 @@
 import pkg_resources
 import os
+import tkinter as tk
 from dock.utils import resized_icon, merge_instance_variables
 from dock.theme import Theme
 
@@ -34,6 +35,8 @@ class CODE_AREA:
     UNTITLED_BUFFER_NAME = "Untitled"
 
     BUFFER_BAR_KWARGS = {"height": 20, "bg": "white"}
+
+    INPUT_TEXT_KWARGS = {"highlightthickness": 0, "width": 40, "height": 10, "wrap": tk.CHAR}
 
     BUFFER_TAB_HIGHLIGHT_COLOR = "white"
     BUFFER_TAB_OPEN_BUTTON_KWARGS = {"cursor": "hand2", "highlightthickness": 0, "borderwidth": 0, "bg": "white"}

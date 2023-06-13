@@ -68,13 +68,14 @@ class BufferBar(tk.Frame):
 class CodeArea(tk.Frame):
     def __init__(self, root, **kwargs):
         super().__init__(root, highlightthickness=0, **kwargs)
+        config.merge_instance_variables(config.CODE_AREA, self)
         self.current_buffer = None
         self.buffers = []
-        self.buffer_bar = BufferBar(self, self, **config.CODE_AREA.BUFFER_BAR_KWARGS)
+        self.buffer_bar = BufferBar(self, self, **self.BUFFER_BAR_KWARGS)
         self.buffer_bar.grid(row=0, column=0, columnspan=2, sticky="we")
-        self.line_numbers = tk.Text(self, highlightthickness=0, **config.CODE_AREA.LINE_NUMBERS_KWARGS)
+        self.line_numbers = tk.Text(self, highlightthickness=0, **self.LINE_NUMBERS_KWARGS)
         self.line_numbers.grid(row=1, column=0, sticky="nsew")
-        self.input_text = tk.Text(self, highlightthickness=0, width=40, height=10, yscrollcommand=self.update_scroll, wrap=tk.CHAR)
+        self.input_text = tk.Text(self, yscrollcommand=self.update_scroll, **self.INPUT_TEXT_KWARGS)
         self.scrollbar = tk.Scrollbar(self, command=self.yview)
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")
@@ -101,11 +102,11 @@ class CodeArea(tk.Frame):
         self.input_text.delete("1.0", "end")
     
     def new_buffer(self):
-        buffer = Buffer("", config.CODE_AREA.UNTITLED_BUFFER_NAME, None, None)
+        buffer = Buffer("", self.UNTITLED_BUFFER_NAME, None, None)
         if self.buffers.count(buffer) != 0:
             i = 1
             while self.buffers.count(buffer) != 0:
-                buffer.name = f"{config.CODE_AREA.UNTITLED_BUFFER_NAME}-{str(i)}"
+                buffer.name = f"{self.UNTITLED_BUFFER_NAME}-{str(i)}"
                 i += 1
 
         self.open_buffer(buffer)
