@@ -7,8 +7,8 @@ config = load_config()
 
 class Terminal(tk.Frame):
     def __init__(self, root, **kwargs):
-        super().__init__(root)
-        self.text = ScrolledText(self, height=10)
+        super().__init__(root, highlightthickness=0)
+        self.text = ScrolledText(self, highlightthickness=0, height=10)
         self.text.pack(fill=tk.BOTH)
         self.text.bind('<Key>', self.handle_key, add='+')
         self.print_prompt()

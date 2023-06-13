@@ -34,7 +34,7 @@ def main():
     config.config_terminal(terminal)
 
     # Create the menu bar
-    menu_bar = tk.Menu(root)
+    menu_bar = tk.Menu(root, bg="white")
     root.config(menu=menu_bar)
 
     app = App(root, code_area, file_tree, status_bar, terminal, plugin_manager)

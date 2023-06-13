@@ -17,6 +17,7 @@ THEMES = {
         status_bar_bg="#3268a8",
         status_bar_text_fg="white",
         code_area_text_bg="white",
+        code_area_line_numbers_bg="#d9d9d9",
         terminal_bg="white",
         file_tree_bg="white"
     )
@@ -32,10 +33,10 @@ class CODE_AREA:
     
     UNTITLED_BUFFER_NAME = "Untitled"
 
-    BUFFER_BAR_KWARGS = {"height": 20}
+    BUFFER_BAR_KWARGS = {"height": 20, "bg": "white"}
 
     BUFFER_TAB_HIGHLIGHT_COLOR = "white"
-    BUFFER_TAB_OPEN_BUTTON_KWARGS = {"cursor": "hand2", "highlightthickness": 0, "borderwidth": 0}
+    BUFFER_TAB_OPEN_BUTTON_KWARGS = {"cursor": "hand2", "highlightthickness": 0, "borderwidth": 0, "bg": "white"}
     BUFFER_TAB_CLOSE_BUTTON_KWARGS = {"text": 'X', "cursor": "hand2", "highlightthickness": 0, "borderwidth": 0, "width": 1, "height": 1, "padx": 4, "pady": 0, "bg": "#ff9191", "fg": "white"}
 
     LINE_NUMBERS_KWARGS = {"width": 6, "height": 10}

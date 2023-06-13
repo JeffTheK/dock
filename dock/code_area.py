@@ -23,7 +23,7 @@ class Buffer:
 
 class BufferTab(tk.Frame):
     def __init__(self, root, code_area, buffer, **kwargs):
-        super().__init__(root, relief="solid", highlightthickness=1, highlightbackground="grey", **kwargs)
+        super().__init__(root, relief="solid", highlightthickness=1, highlightbackground="grey", bg="white", **kwargs)
         self.buffer = buffer
         self.code_area = code_area
         self.open_button = tk.Button(self, text=buffer.name, command=lambda buf=buffer: self.code_area.open_buffer(buf), **config.CODE_AREA.BUFFER_TAB_OPEN_BUTTON_KWARGS)
@@ -41,7 +41,7 @@ class BufferTab(tk.Frame):
     
 class BufferBar(tk.Frame):
     def __init__(self, root, code_area, **kwargs):
-        super().__init__(root, code_area, **kwargs)
+        super().__init__(root, code_area, highlightthickness=0, **kwargs)
         self.code_area = code_area
         self.tabs = {}
         self.selected_tab = None
@@ -67,14 +67,14 @@ class BufferBar(tk.Frame):
     
 class CodeArea(tk.Frame):
     def __init__(self, root, **kwargs):
-        super().__init__(root, **kwargs)
+        super().__init__(root, highlightthickness=0, **kwargs)
         self.current_buffer = None
         self.buffers = []
         self.buffer_bar = BufferBar(self, self, **config.CODE_AREA.BUFFER_BAR_KWARGS)
         self.buffer_bar.grid(row=0, column=0, columnspan=2, sticky="we")
-        self.line_numbers = tk.Text(self, **config.CODE_AREA.LINE_NUMBERS_KWARGS)
+        self.line_numbers = tk.Text(self, highlightthickness=0, **config.CODE_AREA.LINE_NUMBERS_KWARGS)
         self.line_numbers.grid(row=1, column=0, sticky="nsew")
-        self.input_text = tk.Text(self, width=40, height=10, yscrollcommand=self.update_scroll, wrap=tk.CHAR)
+        self.input_text = tk.Text(self, highlightthickness=0, width=40, height=10, yscrollcommand=self.update_scroll, wrap=tk.CHAR)
         self.scrollbar = tk.Scrollbar(self, command=self.yview)
         self.scrollbar.grid(row=1, column=1, sticky="nes")
         self.input_text.grid(row=1, column=1, sticky="nsew")

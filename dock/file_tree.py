@@ -7,7 +7,7 @@ config = load_config()
 
 class FileTree(tk.Frame):
     def __init__(self, root, code_area, **kwargs):
-        super().__init__(root, **kwargs)
+        super().__init__(root, highlightthickness=0, **kwargs)
         self.code_area = code_area
         self.tree = ttk.Treeview(self)
         self.tree.pack(fill=tk.BOTH, expand=True)
