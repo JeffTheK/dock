@@ -17,7 +17,7 @@ class Theme:
         self.file_tree_bg = file_tree_bg
 
 def setup_theme(theme: Theme, app):
-    style = ttk.Style(app.root)
+    app.style = ttk.Style()
 
     app.current_theme = theme
     app.status_bar.configure(bg=theme.status_bar_bg)
@@ -31,5 +31,6 @@ def setup_theme(theme: Theme, app):
 
     app.terminal.text.configure(bg=theme.terminal_bg)
 
-    style.configure("Treeview", background=theme.file_tree_bg, 
+    app.style.configure("Custom.Treeview", background=theme.file_tree_bg, 
                 fieldbackground=theme.file_tree_bg)
+    app.file_tree.tree.configure(style="Custom.Treeview")

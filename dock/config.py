@@ -1,6 +1,6 @@
 import pkg_resources
 import os
-from dock.utils import resized_icon
+from dock.utils import resized_icon, merge_instance_variables
 from dock.theme import Theme
 
 # CONFIG VARIABLES
@@ -15,7 +15,10 @@ THEMES = {
         comment_color="green",
         string_color="yellow",
         status_bar_bg="#3268a8",
-        status_bar_text_fg="white"
+        status_bar_text_fg="white",
+        code_area_text_bg="white",
+        terminal_bg="white",
+        file_tree_bg="white"
     )
 }
 CURRENT_THEME_NAME = "default-light"
@@ -81,6 +84,7 @@ def config_file_tree(file_tree):
     FILE_TREE.FILE_ICON = resized_icon("data/file.png", (16, 16))
     FILE_TREE.FOLDER_OPEN_ICON = resized_icon("data/folder_open.png", (16, 16))
     FILE_TREE.FOLDER_CLOSED_ICON = resized_icon("data/folder_closed.png", (16, 16))
+    merge_instance_variables(FILE_TREE, file_tree)
 
 def config_plugin_manager(plugin_manager):
     plugin_manager.grid(**PLUGIN_MANAGER.KWARGS)

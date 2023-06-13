@@ -118,7 +118,7 @@ class CodeArea(tk.Frame):
             self.buffers.append(buffer)
             self.buffer_bar.add_tab(buffer)
         if self.current_buffer is not None:
-            self.current_buffer.text = self.input_text.get("1.0", tk.END)
+            self.update_buffer_text(self.current_buffer)
 
         self.current_buffer = buffer
         self.clear_input_text()
@@ -127,6 +127,9 @@ class CodeArea(tk.Frame):
         self.input_text.mark_set("insert", "1.0")
         self.buffer_bar.select_tab(buffer)
         self.event_generate("<<BufferOpened>>")
+    
+    def update_buffer_text(self, buffer: Buffer):
+        buffer.text = self.input_text.get("1.0", tk.END)
     
     def close_buffer(self, buffer: Buffer):
         if self.current_buffer is not None and self.current_buffer == buffer:
@@ -139,14 +142,19 @@ class CodeArea(tk.Frame):
             self.open_buffer(self.buffers[-1])
     
     def save_buffer(self, buffer: Buffer):
+        self.update_buffer_text(buffer)
         file_path = buffer.file_path
         if (file_path is None):
             file_path = filedialog.asksaveasfilename()
             if file_path == () or file_path == "":
                 return
+        print("SAVING")
+        print(file_path)
+        self.app.root.config(cursor="watch")
         file = open(file_path, 'w')
         file.write(buffer.text)
         file.close()
+        self.app.root.config(cursor="")
     
     def save_current_buffer(self):
         if self.current_buffer is None:

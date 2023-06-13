@@ -39,6 +39,7 @@ def main():
 
     app = App(root, code_area, file_tree, status_bar, terminal, plugin_manager)
     app.THEMES = config.THEMES
+    code_area.app = app
 
     # Create the "File" menu
     file_menu = tk.Menu(menu_bar, tearoff=False)
@@ -62,8 +63,6 @@ def main():
         app.file_tree.toggle()
     ))
 
-    open_directory(file_tree, ".")
-
     root.eval('tk::PlaceWindow . center')
 
     setup_syntax(app)
@@ -75,6 +74,8 @@ def main():
         theme_menu.add_command(label=theme.name, command=lambda t=theme, a=app: setup_theme(t, a))
 
     setup_theme(config.THEMES[config.CURRENT_THEME_NAME], app)
+
+    open_directory(file_tree, ".")
 
     root.mainloop()
 
