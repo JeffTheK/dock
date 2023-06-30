@@ -6,7 +6,7 @@ from dock.theme import Theme
 
 # CONFIG VARIABLES
 
-ENABLED_PLUGINS = ["vim", "python", "themes"]
+ENABLED_PLUGINS = ["python", "themes"]
 PLUGINS_DIR = pkg_resources.resource_filename("dock", "plugins")
 THEMES = {
     "default-light": Theme(
